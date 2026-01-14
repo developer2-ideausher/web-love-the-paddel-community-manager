@@ -1,0 +1,41 @@
+import { NextResponse } from "next/server";
+
+export function middleware(req) {
+  const { pathname } = req.nextUrl;
+
+  if (/^\/(_next|static|.*\.(css|js|ico|png|jpg|svg|woff2?))$/.test(pathname)) {
+    return NextResponse.next();
+  }
+
+  const publicRoutes = [
+    "/",
+    "/forgot-password",
+    "/email-sent",
+    "/email-verification",
+  ];
+
+  // try {
+  //   const token = req.cookies.get("token");
+
+  //   if (!token) {
+  //     if (publicRoutes.includes(pathname)) {
+  //       return NextResponse.next();
+  //     }
+
+  //     return NextResponse.redirect(new URL("/", req.url));
+  //   }
+
+  //   if (token && publicRoutes.includes(pathname)) {
+  //     return NextResponse.redirect(new URL("/user-management", req.url));
+  //   }
+
+  //   return NextResponse.next();
+  // } catch (error) {
+  //   console.error("Middleware error:", error);
+  //   return NextResponse.redirect(new URL("/", req.url));
+  // }
+}
+
+export const config = {
+  matcher: ["/:path*"],
+};
